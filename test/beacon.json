@@ -1,0 +1,17 @@
+{
+    "website": "https://beacon.lbpunion.com",
+    "game_url": "https://lighthouse.lbpunion.com/LITTLEBIGPLANETPS3_XML",
+    "open_auth": false,
+    "icon_url": "https://static.wixstatic.com/media/5e70b0_50c2f82fe3bf4d4b893a8746aa7da5b5~mv2.png/v1/fill/w_636,h_592,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/Seal%202021.png",
+    "mods_allowed": false,
+    "display_name": "Beacon",
+    "supported_games": {
+        "lbp1": true,
+        "lbp2": true,
+        "lbp3": true,
+        "lbpv": true,
+        "lbppsp": false
+    },
+    "description": "The Official LBPUnion Project Lighthouse LBP Server",
+    "owner": "LittleBigPlanet Union"
+}
