@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "remixicon": "^3.3.0",
     "v-resizable": "^0.0.14",
     "vue": "^3.2.37",
     "vue-sidebar-menu": "^5.2.8"

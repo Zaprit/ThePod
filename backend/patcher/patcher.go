@@ -2,7 +2,9 @@ package patcher
 
 import "os"
 
-func PatchFile(path string, url string) error {
+type Patcher struct{}
+
+func (_ Patcher) PatchFile(path string, url string) error {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return err

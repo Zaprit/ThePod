@@ -55,4 +55,6 @@ func main() {
 
 	settings.SaveServers()
 	settings.SaveRepos()
+	settings.SaveDevices()
+	settings.SaveSettings()
 }
