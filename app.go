@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Zaprit/ThePod/backend/patcher"
 	"github.com/Zaprit/ThePod/backend/patcher/remote"
+	"github.com/Zaprit/ThePod/backend/server_repo"
 	"github.com/Zaprit/ThePod/backend/settings"
 	"github.com/google/uuid"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -60,4 +61,12 @@ func (a *App) PatchFile(path string, url string, outFilePath string) error {
 		patcher.Patch(data, index, url)
 	}
 	return os.WriteFile(outFilePath, data, 0644)
+}
+
+func (a *App) GetServer(name string) server_repo.Server {
+	return settings.GetServers()[name]
+}
+
+func (a *App) GetServers() map[string]server_repo.Server {
+	return settings.GetServers()
 }

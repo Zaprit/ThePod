@@ -8,13 +8,10 @@ import (
 	"sync"
 )
 
-var loadedServers []server_repo.Server
+var loadedServers map[string]server_repo.Server
 var runOnce sync.Once
 
-type Servers struct {
-}
-
-func (_ Servers) Get() []server_repo.Server {
+func GetServers() map[string]server_repo.Server {
 	runOnce.Do(loadServers)
 	return loadedServers
 }
@@ -41,6 +38,6 @@ func SaveServers() {
 	}
 }
 
-func AddServer() {
-
-}
+//func AddServer() {
+//
+//}
