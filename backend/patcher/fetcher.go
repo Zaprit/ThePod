@@ -13,7 +13,7 @@ import (
 
 // PreparePatchingEnvironment creates all the folders we will need for patching, downloads all the tools/keys and
 func PreparePatchingEnvironment() error {
-	cacheDir := settings.GetCacheDir()
+	cacheDir := settings.GetCacheDir("patcher")
 	err := os.Mkdir(cacheDir+"/data", 0755)
 	if err != nil {
 		return err
@@ -65,6 +65,8 @@ func getSCETool(outputPath string) error {
 	if err != nil {
 		return err
 	}
+	defer req.Body.Close()
+
 	file, err := os.OpenFile(outputPath, os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return err

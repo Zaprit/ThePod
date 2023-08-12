@@ -1,32 +1,31 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 
 import NewsArticle from "./NewsArticle.vue";
+import {GetArticles, GetSelectedServer} from "../../wailsjs/go/main/App";
+import {EventsOn, LogInfo} from '../../wailsjs/runtime';
+import {ref} from "vue";
 
-defineProps({
-    icon: String,
-    background: String,
-})
+let server = ref(await GetSelectedServer());
 
-// GetArticles("").then(articles => {
-//     articles.forEach(article => {
-//         console.log(article.Title);
-//     });
-// });
+let articles = ref(await GetArticles());
 
+EventsOn("server_change", async newServer => {
+    server.value = newServer;
+    articles.value = await GetArticles();
+});
 
 </script>
 
 <template>
   <div style="display: block; padding-left: 290px;">
-    <img class="news-background" :src="background" alt=""/>
-    <img class="news-icon" :src="icon" alt=""/>
+    <img class="news-background" :src="server.background_image" alt=""/>
+    <img class="news-icon" :src="server.icon_url" alt=""/>
 
     <h2>News</h2>
     <ul style="list-style: none;">
-      <news-article />
-        <news-article />
-        <news-article />
-        <news-article />
+      <li v-for="item in articles" :key="item.guid">
+        <news-article :article=item />
+      </li>
     </ul>
   </div>
 </template>

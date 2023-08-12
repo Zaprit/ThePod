@@ -2,8 +2,7 @@ package main
 
 import (
 	"embed"
-	"github.com/Zaprit/ThePod/backend/news"
-	"github.com/Zaprit/ThePod/backend/settings"
+	"github.com/Zaprit/ThePod/backend/img_cache"
 	"github.com/wailsapp/wails/v2"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
@@ -32,13 +31,14 @@ func main() {
 		Height: 768,
 		//Frameless: true,
 		AssetServer: &assetserver.Options{
-			Assets: assets,
+			Assets:  assets,
+			Handler: img_cache.NewImgCache(),
 		},
 		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
 		OnStartup:        app.startup,
+		OnShutdown:       app.shutdown,
 		Bind: []interface{}{
 			app,
-			&news.ArticleFetcher{},
 		},
 	}
 
@@ -52,9 +52,4 @@ func main() {
 	if err != nil {
 		println("Error:", err.Error())
 	}
-
-	settings.SaveServers()
-	settings.SaveRepos()
-	settings.SaveDevices()
-	settings.SaveSettings()
 }

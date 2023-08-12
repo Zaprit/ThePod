@@ -36,8 +36,8 @@ func GetDataDir() string {
 	return dir
 }
 
-func GetCacheDir() string {
-	dir := getCacheDir()
+func GetCacheDir(subdir string) string {
+	dir := getCacheDir() + "/" + subdir
 	err := os.MkdirAll(dir, 0750)
 	if err != nil {
 		panic("Failed to create data dirs")

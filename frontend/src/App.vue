@@ -2,6 +2,7 @@
 
 import {SidebarHeaderItem, SidebarItem, SidebarMenu} from "vue-sidebar-menu";
 import {ref} from "vue";
+import {GetServers, SelectServer} from "../wailsjs/go/main/App";
 import NewsPane from "./components/NewsPane.vue";
 import PatchingBar from "./components/PatchingBar.vue";
 
@@ -10,44 +11,42 @@ const menu = ref([
         header: 'Servers',
         hiddenOnCollapse: true
     } as SidebarHeaderItem,
-    {
-        title: 'Beacon',
-        icon: {
-            element: "img",
-            attributes: {src: "https://static.wixstatic.com/media/5e70b0_50c2f82fe3bf4d4b893a8746aa7da5b5~mv2.png/v1/fill/w_636,h_592,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/Seal%202021.png"}
-        }
-    } as SidebarItem,
 
-] as SidebarMenu['menu'])
+] as SidebarMenu['menu']);
 
-menu.value.push({
-    title: 'Beacon Dev',
-
-    icon: {
-        element: "img",
-        attributes: {src: "https://crashhelper.lbpunion.com/static/img/CrashHelper.png"}
+GetServers().then(servers => {
+    for (const serverKey in servers) {
+        menu.value.push({
+            title: servers[serverKey].display_name,
+            key: serverKey,
+            href: "#",
+            icon: {
+                element: "img",
+                attributes: {src: servers[serverKey].icon_url}
+            }
+        } as SidebarItem);
     }
-} as SidebarItem)
+});
 
 
 
-// const selectedServer = reactive(GetServer())
-
-function Fard(event: Event, item: any) {
-    console.log(item)
+async function SidebarClick(event: Event, item: { key: string; }) {
+   await SelectServer(item.key);
 }
 
 </script>
 
 <template>
 
-    <sidebar-menu :menu="menu" hide-toggle @click="fard" />
+    <img src="file:///Users/henry/Downloads/fembag.png">
+    <sidebar-menu :menu="menu" hide-toggle @item-click="SidebarClick" />
 
-    <news-pane background="https://static.wixstatic.com/media/5e4ff2_593104cd3e264e93b92bbe7f2e745535~mv2.jpg/v1/fill/w_1549,h_967,al_c,q_85,enc_auto/5e4ff2_593104cd3e264e93b92bbe7f2e745535~mv2.jpg"
-    icon="https://static.wixstatic.com/media/5e70b0_50c2f82fe3bf4d4b893a8746aa7da5b5~mv2.png/v1/fill/w_636,h_592,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/Seal%202021.png"
-    />
-
-    <patching-bar style="position: absolute; bottom: 0; width: 100%; height: 8%;" accent-colour="blue"/>
+    <suspense>
+        <news-pane/>
+    </suspense>
+    <suspense>
+        <patching-bar style="position: absolute; bottom: 0; width: 100%; height: 8%; border-top: #bbc5d6 2px;"/>
+    </suspense>
 </template>
 
 <style>

@@ -1,22 +1,39 @@
 <template>
-    <li class="news-article" style="display: block; padding-top: 5px; user-select: none; cursor: pointer" @click="onLinkClick">
-
-        <h4 style="display: inline; margin-top: 5px;">LBP Union's Response to the Enhanced Individual Crisis</h4>
-        <img class="article-thumbnail" src="https://static.wixstatic.com/media/5e70b0_66f18f3e2efe4ea398da143211aadd32~mv2.png/v1/fill/w_454,h_341,fp_0.50_0.50,q_95,enc_auto/5e70b0_66f18f3e2efe4ea398da143211aadd32~mv2.png" alt="" />
-
+    <div class="news-article" @click="onLinkClick">
+        <h4 style="display: inline; margin-top: 5px;">{{ article!.title }}</h4>
+        <img class="article-thumbnail" :src="imgURL" :alt="imgAlt"/>
         <br/>
-
-        <p style="justify-content: left; ">Tile Denial reveals the LBP Union's plan to counter the spread of enhanced individuals across the planet.</p>
-
-    </li>
+        <p style="justify-content: left; ">{{ article!.description }}</p>
+    </div>
 </template>
 
 <script lang="ts" setup>
 import {BrowserOpenURL} from "../../wailsjs/runtime";
+import {news} from "../../wailsjs/go/models";
+import {ref} from "vue";
+
+
+const props = defineProps({
+    article: news.Item
+});
+
+let imgURL = ref(props.article?.image?.url);
+let imgAlt = ref(props.article?.image?.title);
 
 function onLinkClick() {
-    BrowserOpenURL("https://www.lbpunion.com/post/lbp-union-s-response-to-the-enhanced-individual-crisis");
+    BrowserOpenURL(props.article?.link!);
 }
+
+if (imgURL.value == null) {
+    const enclosures = props.article?.enclosures;
+    if (enclosures == undefined){
+        imgURL = ref("nope");
+    } else {
+        imgURL = ref(enclosures[0].url);
+        imgAlt = ref("article thumbnail");
+    }
+}
+
 </script>
 
 <style scoped>
@@ -28,8 +45,9 @@ function onLinkClick() {
     margin: 5px;
     box-shadow: 0 14px 80px rgba(34, 35, 58, 0.5);
 }
+
 .news-article {
-    display: flex;
+    display: block;
     flex-direction: column;
     margin-right: 40px;
     background: #36363b;
@@ -39,5 +57,8 @@ function onLinkClick() {
     overflow: hidden;
     z-index: 0;
     margin-bottom: 5px;
+    padding-top: 5px;
+    user-select: none;
+    cursor: pointer;
 }
 </style>

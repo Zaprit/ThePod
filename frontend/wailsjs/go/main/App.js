@@ -6,6 +6,30 @@ export function AddDevice(arg1, arg2, arg3, arg4) {
   return window['go']['main']['App']['AddDevice'](arg1, arg2, arg3, arg4);
 }
 
+export function AddServer(arg1) {
+  return window['go']['main']['App']['AddServer'](arg1);
+}
+
+export function GetArticles() {
+  return window['go']['main']['App']['GetArticles']();
+}
+
+export function GetDevice(arg1) {
+  return window['go']['main']['App']['GetDevice'](arg1);
+}
+
+export function GetDevices() {
+  return window['go']['main']['App']['GetDevices']();
+}
+
+export function GetSelectedDevice() {
+  return window['go']['main']['App']['GetSelectedDevice']();
+}
+
+export function GetSelectedServer() {
+  return window['go']['main']['App']['GetSelectedServer']();
+}
+
 export function GetServer(arg1) {
   return window['go']['main']['App']['GetServer'](arg1);
 }
@@ -14,10 +38,14 @@ export function GetServers() {
   return window['go']['main']['App']['GetServers']();
 }
 
-export function PatchDevice(arg1, arg2) {
-  return window['go']['main']['App']['PatchDevice'](arg1, arg2);
+export function PatchDevice(arg1, arg2, arg3) {
+  return window['go']['main']['App']['PatchDevice'](arg1, arg2, arg3);
 }
 
 export function PatchFile(arg1, arg2, arg3) {
   return window['go']['main']['App']['PatchFile'](arg1, arg2, arg3);
+}
+
+export function SelectServer(arg1) {
+  return window['go']['main']['App']['SelectServer'](arg1);
 }

@@ -11,20 +11,20 @@ import (
 
 var doOnceDevices sync.Once
 
-var loadedDevices map[uuid.UUID]remote.Device
+var loadedDevices map[uuid.UUID]*remote.Device
 
 func loadDevices() {
-	data, err := os.ReadFile(GetDataDir() + "/repos.json")
+	data, err := os.ReadFile(GetDataDir() + "/devices.json")
 	if err != nil {
 		return
 	}
-	err = json.Unmarshal(data, &loadedRepos)
+	err = json.Unmarshal(data, &loadedDevices)
 	if err != nil {
-		log.Warn("Failed to load server list from file")
+		log.Warn("Failed to load device list from file")
 	}
 }
 
-func GetDevices() map[uuid.UUID]remote.Device {
+func GetDevices() map[uuid.UUID]*remote.Device {
 	doOnceDevices.Do(loadDevices)
 	return loadedDevices
 }
@@ -40,6 +40,6 @@ func SaveDevices() {
 	}
 }
 
-func AddDevice(uuid uuid.UUID, device remote.Device) {
+func AddDevice(uuid uuid.UUID, device *remote.Device) {
 	loadedDevices[uuid] = device
 }

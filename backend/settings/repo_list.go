@@ -16,14 +16,17 @@ var doOnce sync.Once
 
 var loadedRepos []string
 
+const defaultRepo = "https://zaprit.github.io/thepod"
+
 func loadRepos() {
 	data, err := os.ReadFile(GetDataDir() + "/repos.json")
-	if err != nil {
-		return
+	if err != nil { // Probably first run, IDK
+		loadedRepos = []string{defaultRepo}
+		go SaveRepos()
 	}
 	err = json.Unmarshal(data, &loadedRepos)
 	if err != nil {
-		log.Warn("Failed to load server list from file")
+		log.Warn("Failed to load repo list from file")
 	}
 }
 

@@ -12,11 +12,14 @@
     "remixicon": "^3.3.0",
     "v-resizable": "^0.0.14",
     "vue": "^3.2.37",
+    "vue-router": "^4.2.2",
     "vue-sidebar-menu": "^5.2.8"
   },
   "devDependencies": {
     "@babel/types": "^7.18.10",
+    "@quasar/vite-plugin": "^1.4.0",
     "@vitejs/plugin-vue": "^4.2.3",
+    "sass": "^1.32.12",
     "typescript": "^4.6.4",
     "vite": "^4.3.8",
     "vue-tsc": "^0.39.5"

@@ -2,6 +2,7 @@ package settings
 
 import (
 	"github.com/Zaprit/ThePod/backend/server_repo"
+	"github.com/google/uuid"
 	"github.com/labstack/gommon/log"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -38,6 +39,8 @@ func SaveServers() {
 	}
 }
 
-//func AddServer() {
-//
-//}
+func AddServer(server server_repo.Server) {
+	id := uuid.New()
+	loadedServers[id.String()] = server
+	SaveServers()
+}

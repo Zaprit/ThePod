@@ -2,15 +2,9 @@ package remote
 
 type DeviceType int
 
-const (
-	PS3 DeviceType = iota
-	PSVita
-	//PSP // Unused for a reason, ain't nobody wanting to patch their psp for lbp... yet
-)
-
 type Device struct {
-	Name     string
-	Hostname string
-	Port     uint16
-	Type     DeviceType
+	Name     string   `json:"name,omitempty"`
+	Hostname string   `json:"hostname,omitempty"`
+	Port     uint16   `json:"port,omitempty"`
+	Type     Platform `json:"type,omitempty"`
 }
