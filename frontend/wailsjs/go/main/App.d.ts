@@ -9,6 +9,8 @@ export function AddDevice(arg1:string,arg2:string,arg3:number,arg4:remote.Platfo
 
 export function AddServer(arg1:server_repo.Server):Promise<void>;
 
+export function FetchImage(arg1:string):Promise<string>;
+
 export function GetArticles():Promise<Array<news.Item>>;
 
 export function GetDevice(arg1:string):Promise<remote.Device>;

@@ -10,6 +10,10 @@ export function AddServer(arg1) {
   return window['go']['main']['App']['AddServer'](arg1);
 }
 
+export function FetchImage(arg1) {
+  return window['go']['main']['App']['FetchImage'](arg1);
+}
+
 export function GetArticles() {
   return window['go']['main']['App']['GetArticles']();
 }

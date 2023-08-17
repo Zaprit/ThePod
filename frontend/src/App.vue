@@ -2,7 +2,7 @@
 
 import {SidebarHeaderItem, SidebarItem, SidebarMenu} from "vue-sidebar-menu";
 import {ref} from "vue";
-import {GetServers, SelectServer} from "../wailsjs/go/main/App";
+import {GetServers, SelectServer, FetchImage} from "../wailsjs/go/main/App";
 import NewsPane from "./components/NewsPane.vue";
 import PatchingBar from "./components/PatchingBar.vue";
 
@@ -37,10 +37,8 @@ async function SidebarClick(event: Event, item: { key: string; }) {
 </script>
 
 <template>
-
-    <img src="file:///Users/henry/Downloads/fembag.png">
-    <sidebar-menu :menu="menu" hide-toggle @item-click="SidebarClick" />
-
+<!--    <sidebar-menu :menu="menu" hide-toggle @item-click="SidebarClick" />-->
+  <server-bar></server-bar>
     <suspense>
         <news-pane/>
     </suspense>

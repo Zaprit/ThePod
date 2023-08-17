@@ -2,10 +2,11 @@ package img_cache
 
 import (
 	"github.com/Zaprit/ThePod/backend/settings"
-	"github.com/google/uuid"
+	"hash/crc32"
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 func DownloadImage(url string) (string, error) {
@@ -19,8 +20,9 @@ func DownloadImage(url string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	imgName := uuid.New().String()
 
+	imgBytes, err := io.ReadAll(resp.Body)
+	imgName := strconv.FormatInt(int64(crc32.ChecksumIEEE(imgBytes)), 16)
 	file, err := os.OpenFile(cacheDir+"/"+imgName, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return "", err

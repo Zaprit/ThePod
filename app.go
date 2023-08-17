@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/Zaprit/ThePod/backend/img_cache"
 	"github.com/Zaprit/ThePod/backend/news"
 	"github.com/Zaprit/ThePod/backend/patcher"
 	"github.com/Zaprit/ThePod/backend/patcher/remote"
@@ -10,6 +11,7 @@ import (
 	"github.com/Zaprit/ThePod/backend/server_repo"
 	"github.com/Zaprit/ThePod/backend/settings"
 	"github.com/google/uuid"
+	"github.com/labstack/gommon/log"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 	"os"
 )
@@ -30,9 +32,8 @@ func NewApp() *App {
 // so that we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
-	go auto_detect.AutoDetect() // Start auto-detecting for PS3s
 	runtime.WindowSetDarkTheme(ctx)
-
+	go auto_detect.AutoDetect() // Start auto-detecting for PS3s
 	// This is awful, find better way to do it
 	var servers []server_repo.Server
 	for _, server := range a.GetServers() {
@@ -125,4 +126,12 @@ func (a *App) GetDevice(uuidStr string) *remote.Device {
 
 func (a *App) GetSelectedDevice() *remote.Device {
 	return a.selectedDevice
+}
+
+func (a *App) FetchImage(url string) string {
+	cacheURL, err := img_cache.DownloadImage(url)
+	if err != nil {
+		log.Error(err)
+	}
+	return cacheURL
 }

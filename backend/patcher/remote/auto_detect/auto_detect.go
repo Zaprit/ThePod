@@ -18,6 +18,7 @@ func AutoDetect() {
 	if err != nil {
 		log.Error("could not listen for ssdp packets")
 	}
+	log.Info("Scanning for PS3s on the local network")
 
 	defer func(conn *net.UDPConn) {
 		_ = conn.Close()
@@ -25,11 +26,13 @@ func AutoDetect() {
 
 	payload := make([]byte, 1024)
 
-	timer := time.NewTicker(15 * time.Second)
-
-	for true {
-		for i := 0; i < 15; i++ {
+	log.Info("We're gonna do it")
+	for {
+		log.Info("looking for ps3s")
+		for i := 0; i < 30; i++ {
+			log.Info("Check tick")
 			_, _, _, addr, err := conn.ReadMsgUDP(payload, nil)
+			log.Info("Sudden death")
 			if err != nil {
 				log.Warn("could not read udp message")
 			}
@@ -45,12 +48,14 @@ func AutoDetect() {
 						}
 
 						if !duplicate {
+							log.Info("Found PS3: ", addr.IP.String())
 							FoundPS3s = append(FoundPS3s, addr.IP.String())
 						}
 					}
 				}
 			}
 		}
-		<-timer.C
+		log.Info("Done looking for ps3s")
+		time.Sleep(5 * time.Second)
 	}
 }
